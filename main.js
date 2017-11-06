@@ -41,7 +41,7 @@ function createWindow() {
     //win.on('resize', () => {
     //    win.reload();
     //});
-    tray = new Tray('./icons/chips.png');
+    tray = new Tray(`${__dirname}/icons/cloud.png`);
     tray.setToolTip('potatoStream is Ready');
     const contextMenu = Menu.buildFromTemplate(trayMenuTemplate);
     tray.setContextMenu(contextMenu);
