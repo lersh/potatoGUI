@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bootstrap 101 Template</title>
+</head>
+<!-- Bootstrap -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<style>
+    body {
+        padding-bottom: 70px;
+        font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+    }
+
+    .input-group-addon {
+        min-width: 110px;
+        text-align: left;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <h1>你好，世界！
+            <small>Hello World!</small>
+        </h1>
+        <div>
+            We are using Node.js
+            <script>document.write(process.versions.node)</script>, Chromium
+            <script>document.write(process.versions.chrome)</script>, and Electron
+            <script>document.write(process.versions.electron)</script>.
+        </div>
+        <br>
+        <div class="input-group">
+            <div class="input-group-addon">服务器地址：</div>
+            <input type="text" name="server" id="input${1/(\w+)/\u\1/g}" class="form-control" value="" required="required" pattern=""
+                title="" placeholder="服务器地址，域名或IP均可">
+        </div>
+        <br>
+        <div class="input-group">
+            <div class="input-group-addon">服务器端口：</div>
+            <input type="number" name="" id="input${1/(\w+)/\u\1/g}" class="form-control" value="" min="{5" } max="" step="" required="required"
+                title="" placeholder="服务器的端口">
+        </div>
+        <br>
+        <div class="input-group">
+            <div class="input-group-addon">服务器密码：</div>
+            <input type="password" name="" id="input${1/(\w+)/\u\1/g}" class="form-control" required="required" title="">
+        </div>
+        <br>
+        <div class="input-group">
+            <div class="input-group-addon">加密方式：</div>
+            <select name="" id="input${1/(\w+)/\u\1/g}" class="form-control">
+                <option value="">-- Select One --</option>
+                <option value="">HTTP</option>
+                <option value="">HTTPS</option>
+            </select>
+        </div>
+        <br>
+        <div class="input-group">
+            <div class="input-group-addon">混淆参数</div>
+            <input type="text" name="" id="input${1/(\w+)/\u\1/g}" class="form-control" value="" required="required" pattern="" title="">
+        </div>
+        <br>
+        <div class="input-group">
+            <div class="input-group-addon">伪装CA</div>
+            <input type="text" class="form-control" id="exampleInputAmount" placeholder="Amount">
+        </div>
+
+        <br>
+        <button type="button" title="OK" id="send_msg" class="btn btn-primary">OK</button>
+
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <div id="footer" class="container">
+        <nav class="navbar navbar-default navbar-fixed-bottom">
+            <a class="navbar-brand">
+                <strong>potato</strong>.stream</a>
+            <div class="pull-right" style="padding:15px;">运行状态</div>
+        </nav>
+    </div>
+</body>
+<script>
+                    const ipc = require('electron').ipcRenderer;
+                    const btn = document.getElementById('send_msg');
+                    btn.addEventListener('click', () => {
+                        ipc.send('console-alert', 'Hello,World...');
+                    });
+</script>
+
+</html>
