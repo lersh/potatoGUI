@@ -6,7 +6,7 @@ let win, tray;
 let windowConfig = {
     width: 400,
     height: 700,
-    resizable: false
+    resizable: true
 }
 let trayMenuTemplate = [
     {
@@ -17,10 +17,9 @@ let trayMenuTemplate = [
         }
     },
     {
-        label: '启动',
+        label: '启动开发者工具',
         click: function () {
-            win.hide();
-            console.log('start');
+            win.webContents.openDevTools();
         }
     }]
 
