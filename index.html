@@ -31,6 +31,17 @@
             <script>document.write(process.versions.node)</script>, Chromium
             <script>document.write(process.versions.chrome)</script>, and Electron
             <script>document.write(process.versions.electron)</script>.
+
+            <div class="alert alert-info">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <strong>App Version:</strong>
+                <script>
+                    document.write(require('electron').remote.getGlobal('sharedObject').appVersion);
+                </script>
+            </div>
+
+
+
         </div>
         <br>
         <div class="input-group">
@@ -62,11 +73,6 @@
         <div class="input-group">
             <div class="input-group-addon">混淆参数</div>
             <input type="text" name="" id="input${1/(\w+)/\u\1/g}" class="form-control" value="" required="required" pattern="" title="">
-        </div>
-        <br>
-        <div class="input-group">
-            <div class="input-group-addon">伪装CA</div>
-            <input type="text" class="form-control" id="exampleInputAmount" placeholder="Amount">
         </div>
 
         <br>

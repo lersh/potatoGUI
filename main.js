@@ -24,7 +24,10 @@ let trayMenuTemplate = [
         }
     }]
 
-
+global.sharedObject = {
+    appVersion: '0.0.1',
+    author:'lersh'
+};
 
 
 function createWindow() {
