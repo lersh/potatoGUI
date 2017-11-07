@@ -1,3 +1,4 @@
 node_modules/*
 potatoGUI-darwin-x64/*
 .DS_Store
+dist/*

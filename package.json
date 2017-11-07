@@ -11,5 +11,13 @@
   "license": "ISC",
   "devDependencies": {
     "electron": "^1.7.9"
+  },
+  "build": {
+    "appId": "net.lersh.potato",
+    "productName":"potatoGUI",
+    "win": {
+      "icon": "icons/app"
+    }
   }
+
 }
