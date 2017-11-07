@@ -6,6 +6,8 @@ let win, tray;
 let windowConfig = {
     width: 400,
     height: 700,
+    icon: __dirname + '/icons/icon.png',
+    title: 'potatoGUI',
     resizable: true
 }
 let trayMenuTemplate = [

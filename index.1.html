@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>potato服务器</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Electron里为了不和jQuery冲突需要这样修改-->
+    <script>if (typeof module === 'object') { window.jQuery = window.$ = module.exports; };</script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+</head>
+
+<style>
+    body {
+        padding-bottom: 70px;
+        font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+    }
+
+    .input-group-addon {
+        min-width: 110px;
+        text-align: left;
+    }
+
+    .center {
+        position: absolute;
+        top: 50%;
+        transform: translate(0, -50%);
+        width: 100%;
+        height: 20px;
+    }
+
+    footer {
+        background: #ECECEC;
+        width: 100%;
+        height: 50px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+    }
+
+    footer .img-responsive{ position: absolute; right: 0px;top: 50%; transform: translate(0, -50%);}
+
+    *:focus {
+        outline: 0 !important;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <h1>你好，世界！
+            <small>Hello World!</small>
+        </h1>
+        <br>
+        <button type="button" title="OK" id="send_msg" class="btn btn-primary">OK</button>
+
+    </div>
+
+    <footer>
+        <div class="container-fluid">
+            <img src="icons/stop.png" class="img-responsive pull-right"  alt="Image">
+            <div class="row center">
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

@@ -5,10 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Bootstrap 101 Template</title>
+    <title>potato服务器</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Electron里为了不和jQuery冲突需要这样修改-->
+    <script>if (typeof module === 'object') { window.jQuery = window.$ = module.exports; };</script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
 </head>
-<!-- Bootstrap -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
+
 <style>
     body {
         padding-bottom: 70px;
@@ -18,6 +25,31 @@
     .input-group-addon {
         min-width: 110px;
         text-align: left;
+    }
+
+    .center {
+        position: absolute;
+        top: 50%;
+        transform: translate(0, -50%);
+        width: 100%;
+        height: 20px;
+    }
+
+    footer {
+        background: #ECECEC;
+        width: 100%;
+        height: 50px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+    }
+
+    .icon {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        background-color: #aaa;
+        border: solid 1px #000;
     }
 
     *:focus {
@@ -84,26 +116,27 @@
 
     </div>
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-    <script>if (typeof module === 'object') { window.jQuery = window.$ = module.exports; };</script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
 
-    <div id="footer" class="container">
-        <nav class="navbar navbar-default navbar-fixed-bottom">
-            <a class="navbar-brand">
-                <strong>potato</strong>.stream</a>
-            <div class="pull-right" style="padding:15px;">运行状态</div>
-        </nav>
-    </div>
+    <footer>
+        <div class="container-fluid">
+            <div class="row center">
+                <p class="col-xs-9">PPTV.com</p>
+                <div class="col-xs-3 text-right">
+                    <img src="icons/stop.png" id="workstatus" class="img-responsive pull-right" style="margin-top: 2px" alt="stop">
+                    <p>状态:&nbsp;</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 <script>
-            const ipc = require('electron').ipcRenderer;
-            const btn = document.getElementById('send_msg');
-            btn.addEventListener('click', () => {
-                ipc.send('console-alert', 'Hello,World...');
-            });
+                    const ipc = require('electron').ipcRenderer;
+                    const btn = document.getElementById('send_msg');
+                    btn.addEventListener('click', () => {
+                        ipc.send('console-alert', 'Hello,World...');
+                        var ws = document.getElementById('workstatus');
+                        ws.src = 'icons/working.png';
+                    });
 </script>
 
 </html>
