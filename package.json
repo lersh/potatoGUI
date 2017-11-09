@@ -23,5 +23,8 @@
     "mac": {
       "category": "your.app.category.type"
     }
+  },
+  "dependencies": {
+    "node-notifier": "^5.1.2"
   }
 }

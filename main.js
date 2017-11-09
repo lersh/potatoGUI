@@ -2,6 +2,7 @@
 const { app, BrowserWindow, Menu, Tray } = require('electron');
 const ipc = require('electron').ipcMain;
 const net = require('net');
+const notifier = require('node-notifier');
 
 let win, tray;
 let windowConfig = {
@@ -13,6 +14,13 @@ let windowConfig = {
 }
 let trayMenuTemplate = [
     {
+        label: '刷新',
+        click: function () {
+            win.reload();
+        }
+    },
+    {
+
         label: '关于',
         click: function () {
             win.show();
@@ -77,8 +85,14 @@ app.on('activate', () => {
 
 ipc.on('console-alert', (event, arg) => {
     console.log(arg);
+    notifier.notify(
+        {
+            icon: `${__dirname}/icons/icon.png`,
+            title: 'potato GUI',
+            message: 'this is a long long\ntext message!'
+        });
 });
-ipc.on('port-listen',(event,arg)=>{
+ipc.on('port-listen', (event, arg) => {
     tcpListen();
-    win.webContents.send('tcpListen','on');
+    win.webContents.send('tcpListen', 'on');
 });

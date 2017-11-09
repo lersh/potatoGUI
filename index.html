@@ -52,12 +52,38 @@
         border: solid 1px #000;
     }
 
+    .modal.fade {
+        top: 40%;
+    }
+
+    .modal.fade.in {
+        top: 40%;
+    }
+
     *:focus {
         outline: 0 !important;
     }
 </style>
 
 <body>
+    <div class="modal fade" id="modal-error">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Modal title</h4>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <h1>你好，世界！
             <small>Hello World!</small>
@@ -115,6 +141,7 @@
         <button type="button" title="OK" id="send_msg" class="btn btn-primary">OK</button>
         <button type="button" title="Listen" id="send_listen" class="btn btn-default">Listen</button>
 
+
     </div>
 
 
@@ -131,24 +158,25 @@
     </footer>
 </body>
 <script>
-                    const ipc = require('electron').ipcRenderer;
-                    const btn = document.getElementById('send_msg');
-                    btn.addEventListener('click', () => {
-                        ipc.send('console-alert', 'Hello,World...');
-                        var ws = document.getElementById('workstatus');
-                        ws.src = 'icons/working.png';
-                    });
+    const ipc = require('electron').ipcRenderer;
+    const btn = document.getElementById('send_msg');
+    btn.addEventListener('click', () => {
+        ipc.send('console-alert', 'Hello,World...');
+        $('#modal-error').modal();
+        var ws = document.getElementById('workstatus');
+        ws.src = 'icons/working.png';
+    });
 
-                    const btnListen = document.getElementById('send_listen');
-                    btnListen.addEventListener('click', () => {
-                        ipc.send('port-listen', '')
-                    });
+    const btnListen = document.getElementById('send_listen');
+    btnListen.addEventListener('click', () => {
+        ipc.send('port-listen', '')
+    });
 
-                    ipc.on('tcpListen', (event, arg) => {
-                        if (arg === 'on') {
-                            $('#workstatus').attr('src', 'icons/working.png');
-                        }
-                    });
+    ipc.on('tcpListen', (event, arg) => {
+        if (arg === 'on') {
+            $('#workstatus').attr('src', 'icons/working.png');
+        }
+    });
 </script>
 
 </html>
