@@ -113,6 +113,7 @@
 
         <br>
         <button type="button" title="OK" id="send_msg" class="btn btn-primary">OK</button>
+        <button type="button" title="Listen" id="send_listen" class="btn btn-default">Listen</button>
 
     </div>
 
@@ -136,6 +137,17 @@
                         ipc.send('console-alert', 'Hello,World...');
                         var ws = document.getElementById('workstatus');
                         ws.src = 'icons/working.png';
+                    });
+
+                    const btnListen = document.getElementById('send_listen');
+                    btnListen.addEventListener('click', () => {
+                        ipc.send('port-listen', '')
+                    });
+
+                    ipc.on('tcpListen', (event, arg) => {
+                        if (arg === 'on') {
+                            $('#workstatus').attr('src', 'icons/working.png');
+                        }
                     });
 </script>
 

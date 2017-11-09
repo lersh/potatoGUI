@@ -1,6 +1,7 @@
 'use strict'
 const { app, BrowserWindow, Menu, Tray } = require('electron');
 const ipc = require('electron').ipcMain;
+const net = require('net');
 
 let win, tray;
 let windowConfig = {
@@ -27,9 +28,17 @@ let trayMenuTemplate = [
 
 global.sharedObject = {
     appVersion: '0.0.1',
-    author:'lersh'
+    author: 'lersh'
 };
 
+function tcpListen() {
+    var server = net.createServer();
+    server.on('connection', (socket) => {
+        console.log(`Connect from ${socket.remoteAddress}:${socket.remotePort}`);
+    });
+    server.listen(1999);
+
+}
 
 function createWindow() {
     win = new BrowserWindow(windowConfig);
@@ -55,6 +64,7 @@ function createWindow() {
 
 }
 
+
 app.on('ready', createWindow);
 app.on('window-all-closed', () => {
     app.quit();
@@ -67,4 +77,8 @@ app.on('activate', () => {
 
 ipc.on('console-alert', (event, arg) => {
     console.log(arg);
-})
+});
+ipc.on('port-listen',(event,arg)=>{
+    tcpListen();
+    win.webContents.send('tcpListen','on');
+});
