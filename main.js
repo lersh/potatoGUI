@@ -3,6 +3,7 @@ const { app, BrowserWindow, Menu, Tray } = require('electron');
 const ipc = require('electron').ipcMain;
 const net = require('net');
 const notifier = require('node-notifier');
+var config = require('./config.json');
 
 let win, tray;
 let windowConfig = {
@@ -36,7 +37,13 @@ let trayMenuTemplate = [
 
 global.sharedObject = {
     appVersion: '0.0.1',
-    author: 'lersh'
+    author: 'lersh',
+    server_addr: config.server_addr,
+    server_port: 1999,
+    local_port: 3000,
+    method: "https",
+    obfs: "cloud.tencent.com",
+    password: "1qaz2wsx#EDC"
 };
 
 function tcpListen() {

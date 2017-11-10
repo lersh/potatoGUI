@@ -17,6 +17,14 @@
 </head>
 
 <style>
+    :not(input):not(textarea),
+    :not(input):not(textarea)::after,
+    :not(input):not(textarea)::before {
+        -webkit-user-select: none;
+        user-select: none;
+        cursor: default;
+    }
+
     body {
         padding-bottom: 70px;
         font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
@@ -101,40 +109,36 @@
                     document.write(require('electron').remote.getGlobal('sharedObject').appVersion);
                 </script>
             </div>
-
-
-
         </div>
         <br>
         <div class="input-group">
             <div class="input-group-addon">服务器地址：</div>
-            <input type="text" name="server" id="input${1/(\w+)/\u\1/g}" class="form-control" value="" required="required" pattern=""
-                title="" placeholder="服务器地址，域名或IP均可">
+            <input type="text" name="server" id="input-server" class="form-control" value="" required="required" pattern="" title=""
+                placeholder="服务器地址，域名或IP均可">
         </div>
         <br>
         <div class="input-group">
             <div class="input-group-addon">服务器端口：</div>
-            <input type="number" name="" id="input${1/(\w+)/\u\1/g}" class="form-control" value="" min="{5" } max="" step="" required="required"
-                title="" placeholder="服务器的端口">
+            <input type="number" name="" id="input-port" class="form-control" value="" min="5" max="" step="" required="required" title=""
+                placeholder="服务器的端口">
         </div>
         <br>
         <div class="input-group">
             <div class="input-group-addon">服务器密码：</div>
-            <input type="password" name="" id="input${1/(\w+)/\u\1/g}" class="form-control" required="required" title="">
+            <input type="password" name="" id="input-password" class="form-control" required="required" title="">
         </div>
         <br>
         <div class="input-group">
             <div class="input-group-addon">加密方式：</div>
-            <select name="" id="input${1/(\w+)/\u\1/g}" class="form-control">
-                <option value="">-- Select One --</option>
-                <option value="">HTTP</option>
-                <option value="">HTTPS</option>
+            <select name="" id="input-method" class="form-control">
+                <option value="http">HTTP</option>
+                <option value="https">HTTPS</option>
             </select>
         </div>
         <br>
         <div class="input-group">
             <div class="input-group-addon">混淆参数</div>
-            <input type="text" name="" id="input${1/(\w+)/\u\1/g}" class="form-control" value="" required="required" pattern="" title="">
+            <input type="text" name="" id="input-obfs" class="form-control" value="" required="required" pattern="" title="">
         </div>
 
         <br>
@@ -148,7 +152,7 @@
     <footer>
         <div class="container-fluid">
             <div class="row center">
-                <p class="col-xs-9">PPTV.com</p>
+                <p class="col-xs-9"><strong>potato</strong>stream:<span id="input-local_port">3000</span></p>
                 <div class="col-xs-3 text-right">
                     <img src="icons/stop.png" id="workstatus" class="img-responsive pull-right" style="margin-top: 2px" alt="stop">
                     <p>状态:&nbsp;</p>
@@ -158,6 +162,13 @@
     </footer>
 </body>
 <script>
+    var sharedObject = require('electron').remote.getGlobal('sharedObject');
+    $('#input-server').val(sharedObject.server_addr);
+    $('#input-port').val(sharedObject.server_port);
+    $('#input-password').val(sharedObject.password);
+    $('#input-method').val(sharedObject.method);
+    $('#input-obfs').val(sharedObject.obfs);
+
     const ipc = require('electron').ipcRenderer;
     const btn = document.getElementById('send_msg');
     btn.addEventListener('click', () => {

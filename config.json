@@ -1,0 +1,11 @@
+{
+    "server_addr": "127.0.0.1",
+    "server_port": 1999,
+    "local_port": 3000,
+    "method": "https",
+    "obfs": "cloud.tencent.com",
+    "camouflageCA":"/C=CN/O=Sinorail Certification Authority/CN=SRCA",
+    "camouflage": "/C=CN/O=Sinorail Certification Authority/OU=铁路客户服务中心/CN=kyfw.12306.cn",
+    "algorithm": "aes-256-cfb",
+    "password": "1qaz2wsx#EDC"
+}
