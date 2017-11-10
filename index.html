@@ -96,20 +96,6 @@
         <h1>你好，世界！
             <small>Hello World!</small>
         </h1>
-        <div>
-            We are using Node.js
-            <script>document.write(process.versions.node)</script>, Chromium
-            <script>document.write(process.versions.chrome)</script>, and Electron
-            <script>document.write(process.versions.electron)</script>.
-
-            <div class="alert alert-info">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <strong>App Version:</strong>
-                <script>
-                    document.write(require('electron').remote.getGlobal('sharedObject').appVersion);
-                </script>
-            </div>
-        </div>
         <br>
         <div class="input-group">
             <div class="input-group-addon">服务器地址：</div>
@@ -152,7 +138,10 @@
     <footer>
         <div class="container-fluid">
             <div class="row center">
-                <p class="col-xs-9"><strong>potato</strong>stream:<span id="input-local_port">3000</span></p>
+                <p class="col-xs-9">
+                    <strong>potato</strong>stream:
+                    <span id="input-local_port">3000</span>
+                </p>
                 <div class="col-xs-3 text-right">
                     <img src="icons/stop.png" id="workstatus" class="img-responsive pull-right" style="margin-top: 2px" alt="stop">
                     <p>状态:&nbsp;</p>
