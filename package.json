@@ -25,6 +25,7 @@
     }
   },
   "dependencies": {
-    "node-notifier": "^5.1.2"
+    "node-notifier": "^5.1.2",
+    "socks-proxy": "^1.0.0"
   }
 }
