@@ -14,64 +14,8 @@
     <script>if (typeof module === 'object') { window.jQuery = window.$ = module.exports; };</script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+    <link href="./css/potato.css" rel="stylesheet">
 </head>
-
-<style>
-    :not(input):not(textarea),
-    :not(input):not(textarea)::after,
-    :not(input):not(textarea)::before {
-        -webkit-user-select: none;
-        user-select: none;
-        cursor: default;
-    }
-
-    body {
-        padding-bottom: 70px;
-        font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
-    }
-
-    .input-group-addon {
-        min-width: 110px;
-        text-align: left;
-    }
-
-    .center {
-        position: absolute;
-        top: 50%;
-        transform: translate(0, -50%);
-        width: 100%;
-        height: 20px;
-    }
-
-    footer {
-        background: #ECECEC;
-        width: 100%;
-        height: 50px;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-    }
-
-    .icon {
-        display: inline-block;
-        width: 16px;
-        height: 16px;
-        background-color: #aaa;
-        border: solid 1px #000;
-    }
-
-    .modal.fade {
-        top: 40%;
-    }
-
-    .modal.fade.in {
-        top: 40%;
-    }
-
-    *:focus {
-        outline: 0 !important;
-    }
-</style>
 
 <body>
     <div class="modal fade" id="modal-error">
@@ -161,10 +105,18 @@
     const ipc = require('electron').ipcRenderer;
     const btn = document.getElementById('send_msg');
     btn.addEventListener('click', () => {
-        ipc.send('console-alert', 'Hello,World...');
+        var argStr = {};
+        argStr.msg = 'Hello World!';
+        argStr.server_addr = $('#input-server').val();
+        argStr.server_port = $('#input-port').val();
+        argStr.password = $('#input-password').val();
+        argStr.method = $('#input-method').val();
+        argStr.obfs = $('#input-obfs').val();
+
+        ipc.send('console-alert', argStr);
         $('#modal-error').modal();
-        var ws = document.getElementById('workstatus');
-        ws.src = 'icons/working.png';
+        $('#workstatus').attr('src', 'icons/working.png');
+
     });
 
     const btnListen = document.getElementById('send_listen');

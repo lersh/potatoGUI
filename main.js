@@ -1,5 +1,6 @@
 'use strict'
 const { app, BrowserWindow, Menu, Tray } = require('electron');
+const fs = require('fs');
 const ipc = require('electron').ipcMain;
 const net = require('net');
 const notifier = require('node-notifier');
@@ -42,14 +43,12 @@ let trayMenuTemplate = [
     }]
 
 global.sharedObject = {
-    appVersion: '0.0.1',
-    author: 'lersh',
     server_addr: config.server_addr,
-    server_port: 1999,
-    local_port: 3000,
-    method: "https",
-    obfs: "cloud.tencent.com",
-    password: "1qaz2wsx#EDC"
+    server_port: config.server_port,
+    local_port: config.local_port,
+    method: config.method,
+    obfs: config.obfs,
+    password: config.password
 };
 
 function tcpListen() {
@@ -108,7 +107,15 @@ app.on('before-quit', () => {
 });
 
 ipc.on('console-alert', (event, arg) => {
-    console.log(arg);
+    console.log(arg.msg);
+    global.sharedObject.server_addr = arg.server_addr;
+    global.sharedObject.server_port = arg.server_port;
+    global.sharedObject.password = arg.password;
+    global.sharedObject.method = arg.method;
+    global.sharedObject.obfs=arg.obfs;
+
+
+    fs.writeFileSync(`${__dirname}/config.json`, JSON.stringify(global.sharedObject));
     notifier.notify(
         {
             icon: `${__dirname}/icons/icon.png`,
