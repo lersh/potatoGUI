@@ -82,7 +82,7 @@ function tcpListen() {
 }
 
 function startServer() {
-    const server = socks.createServer(function (client) {
+    socks5Server = socks.createServer(function (client) {
         var address = client.address;
         logger.trace('浏览器想要连接： %s:%d', address.address, address.port);
 
@@ -91,7 +91,7 @@ function startServer() {
 
             logger.trace('连上了potato服务器');
             //构造一个信令告诉potato服务器要连接的目标地址
-            var req = Potato.SymbolRequest.Create(address.address, address.port);  //Potato.CreateHead.ConnectRequest(address.address, address.port);
+            var req = Potato.SymbolRequest.Create(address.address, address.port);  
             potatoSocket.write(req);//将信令发给potato服务器
             logger.trace('发送连接信令  %s:%d', potatoSocket.remoteAddress, potatoSocket.remotePort);
 
@@ -145,7 +145,7 @@ function startServer() {
     });
 
 
-    server.listen(local_port, () => {
+    socks5Server.listen(local_port, () => {
         logger.info('listening on ' + local_port);
     });
 }
