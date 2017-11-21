@@ -95,12 +95,12 @@
     </footer>
 </body>
 <script>
-    var sharedObject = require('electron').remote.getGlobal('sharedObject');
-    $('#input-server').val(sharedObject.server_addr);
-    $('#input-port').val(sharedObject.server_port);
-    $('#input-password').val(sharedObject.password);
-    $('#input-method').val(sharedObject.method);
-    $('#input-obfs').val(sharedObject.obfs);
+    var config = require('electron').remote.getGlobal('config');
+    $('#input-server').val(config.server_addr);
+    $('#input-port').val(config.server_port);
+    $('#input-password').val(config.password);
+    $('#input-method').val(config.method);
+    $('#input-obfs').val(config.obfs);
 
     const ipc = require('electron').ipcRenderer;
     const btn = document.getElementById('send_msg');
