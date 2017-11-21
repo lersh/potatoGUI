@@ -6,8 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
-    "packageDarwin": "electron-packager . potatoGUI --platform=darwin --arch=x64 --icon=icons/app.icns --out=./dist --asar --app-version=2.0.1 --ignore=\"(dist|src|docs|.gitignore|LICENSE|README.md|webpack.config*|node_modules)\"",
-    "packageWin": "electron-packager . potatoGUI --platform=win32 --arch=x64 --icon=icons/app.ico --out=./dist --asar --app-version=2.0.1 --ignore=\"(dist|src|docs|.gitignore|LICENSE|README.md|webpack.config.js|node_modules)\""
+    "packageMac": "electron-packager . potatoGUI --platform=darwin --arch=x64 --icon=icons/app.icns --out=./dist --asar --app-version=2.0.1 --ignore=\"(dist|src|docs|.gitignore|LICENSE|README.md|webpack.config*|node_modules)\"",
+    "packageWin": "electron-packager . potatoGUI --platform=win32 --arch=x64 --icon=icons/app.ico --out=./dist --asar --app-version=2.0.1 --ignore=\"(dist|src|docs|.gitignore|LICENSE|README.md|webpack.config.js|node_modules)\"",
+    "packageLinux": "electron-packager . potatoGUI --platform=linux --arch=x64 --icon=icons/icon.png --out=./dist --asar --app-version=2.0.1 --ignore=\"(dist|src|docs|.gitignore|LICENSE|README.md|webpack.config.js|node_modules)\""
   },
   "author": "",
   "license": "ISC",
