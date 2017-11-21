@@ -58,12 +58,26 @@ global.sharedObject = {
     password: config.password
 };
 
+var tcpServer = null;
+var socks5Server = null;
 function tcpListen() {
-    var server = net.createServer();
-    server.on('connection', (socket) => {
-        console.log(`Connect from ${socket.remoteAddress}:${socket.remotePort}`);
-    });
-    server.listen(1999);
+    if (tcpServer === null) {
+        tcpServer = net.createServer();
+        tcpServer.on('connection', (socket) => {
+            console.log(`Connect from ${socket.remoteAddress}:${socket.remotePort}`);
+        });
+        tcpServer.listen(1999, () => {
+            logger.info('Listen on 1999');
+        });
+    }
+    else {
+        tcpServer.close();
+        tcpServer.on('close', () => {
+            logger.info('Server closed');
+            tcpServer = null;
+        });
+
+    }
 
 }
 
@@ -119,7 +133,7 @@ ipc.on('console-alert', (event, arg) => {
     global.sharedObject.server_port = arg.server_port;
     global.sharedObject.password = arg.password;
     global.sharedObject.method = arg.method;
-    global.sharedObject.obfs=arg.obfs;
+    global.sharedObject.obfs = arg.obfs;
 
 
     fs.writeFileSync(`${__dirname}/config.json`, JSON.stringify(global.sharedObject));
@@ -136,24 +150,24 @@ ipc.on('port-listen', (event, arg) => {
 });
 
 
-function startServer(){
+function startServer() {
     const server = socks.createServer(function (client) {
         var address = client.address;
         logger.trace('浏览器想要连接： %s:%d', address.address, address.port);
-    
+
         var potatoServer = net.connect(potatoPort, potatoAddr, function () {//连接远程代理服务器
             var potatoSocket = this;//potato服务器的连接
-    
+
             logger.trace('连上了potato服务器');
             //构造一个信令告诉potato服务器要连接的目标地址
             var req = Potato.SymbolRequest.Create(address.address, address.port);  //Potato.CreateHead.ConnectRequest(address.address, address.port);
             potatoSocket.write(req);//将信令发给potato服务器
             logger.trace('发送连接信令  %s:%d', potatoSocket.remoteAddress, potatoSocket.remotePort);
-    
+
             potatoSocket.once('data', (data) => {//第一次收到回复时
                 var reply = Potato.SymbolPeply.Resolve(data);//解析返回的信号
                 logger.trace(reply);
-    
+
                 client.reply(reply.sig);//将状态发给浏览器
                 logger.trace('收到的信号：%d，目标地址： %s:%d', reply.sig, address.address, address.port);//浏览器收到连通的信号就会开始发送真正的请求数据
                 //var cipher = crypto.createCipher(algorithm, password),
@@ -166,7 +180,7 @@ function startServer(){
                     .pipe(decipher)//将返回的数据解密
                     .pipe(client);//远程代理服务器的数据再回传给浏览器
             });
-    
+
             potatoSocket.on('error', (err) => {
                 logger.error('potato服务器错误：%s\r\n%s', err.code, err.message);
                 switch (err.code) {
@@ -179,7 +193,7 @@ function startServer(){
                 }
             });
         });
-    
+
         client.on('error', (err) => {
             //logger.error('浏览器端连接错误：%s\r\n%s', err.code, err.message);
             switch (err.code) {
@@ -198,8 +212,8 @@ function startServer(){
             client.end();
         });
     });
-    
- 
+
+
     server.listen(local_port, () => {
         logger.info('listening on ' + local_port);
     });
@@ -207,12 +221,15 @@ function startServer(){
 
 
 process.on('uncaughtException', function (err) {
-	switch (err.code) {
-		case 'ECONNREFUSED':
-			logger.error('远程服务器拒绝连接，可能已经关闭. ' + err.message);
-			break;
-		default:
-			logger.error("process error: " + err.message);
-			logger.error(err.stack);
-	}
+    switch (err.code) {
+        case 'ECONNREFUSED':
+            logger.error('远程服务器拒绝连接，可能已经关闭. ' + err.message);
+            break;
+        case 'EADDRINUSE':
+            logger.error('本地端口已经被占用. ' + err.message);
+            break;
+        default:
+            logger.error("process error: " + err.message);
+            logger.error(err.stack);
+    }
 });
